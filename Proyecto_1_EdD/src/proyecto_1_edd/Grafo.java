@@ -15,7 +15,6 @@ public class Grafo {
             y = 4;
         }
         this.maxNodos = y;
-        //aristas = new Lista("aristas_");
         
         for (int i = 0; i < n; ++i) {
             for (int j = 0; j < n; ++j) {
@@ -35,12 +34,10 @@ public class Grafo {
         }
     }
     
-    public void añadirArista(int src, int dst, int dist) {
+    public void añadirArista(double valor, int src, int dst) {
         if(src != dst) {
-            matriz[src][dst] = dist;
-            matriz[dst][src] = dist;
-            //int arista = dist;
-            //aristas.InsertLast(arista);
+            matriz[src][dst] = (int) valor;
+            matriz[dst][src] = (int) valor;
         }
     }
     
@@ -70,10 +67,8 @@ public class Grafo {
     
     public void eliminarArista(int src, int dst) {
         if(src != dst) {
-            //int inX = aristas.SearchValue(matriz[src][dst]);
             matriz[src][dst] = 0;
             matriz[dst][src] = 0;
-            //aristas.Delete(inX);
         }
     }
     

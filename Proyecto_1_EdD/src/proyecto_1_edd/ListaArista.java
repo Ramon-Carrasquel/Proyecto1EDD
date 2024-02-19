@@ -3,14 +3,14 @@ package proyecto_1_edd;
 
 
 
-public class Lista {
+public class ListaArista {
     
-    private Nodo nfirst;
-    private Nodo nlast;
+    private Arista nfirst;
+    private Arista nlast;
     private String name;
     private int iN;
     
-    Lista(String n) {
+    ListaArista(String n) {
         nfirst = null;
         iN = 0;
         name = n;
@@ -22,11 +22,11 @@ public class Lista {
         return nfirst == null;
     }
     
-    public Nodo First() {
+    public Arista First() {
         return nfirst;
     }
     
-    public Nodo Last() {
+    public Arista Last() {
         return nlast;
     }
     
@@ -35,26 +35,26 @@ public class Lista {
     }
     
     public void Read(int inX) {
-        Nodo pAux = nfirst;
+        Arista pAux = nfirst;
         for (int i = 0; i < inX; i++) {
             pAux = pAux.next;
         }
-        System.out.println(pAux.value);
+        System.out.println(pAux.src + "," + pAux.dst + "," + pAux.valor);
     }
     
     public void ReadAll() {
-        Nodo pAux = nfirst;
+        Arista pAux = nfirst;
         for (int i = 0; i < iN; i++) {
-            System.out.print(pAux.value + " -> ");
+            System.out.println(pAux.src + "," + pAux.dst + "," + pAux.valor);
             pAux = pAux.next;
         }
         System.out.println("FIN");
     }
     
-    public int SearchValue(int pValue) {
-        Nodo pAux = nfirst;
+    public int SearchValue(int pSrc, int pDst) {
+        Arista pAux = nfirst;
         for (int i = 0; i < iN; i++) {
-            if(pAux.value == pValue) {
+            if(pAux.src == pSrc && pAux.dst == pDst) {
                 return i;
             }
             else {
@@ -66,8 +66,8 @@ public class Lista {
     
     //---------------------------------//
     
-    public void InsertFirst(int pValue) {
-        Nodo pNew = new Nodo(pValue);
+    public void InsertFirst(double pValor, int pSrc, int pDst) {
+        Arista pNew = new Arista(pValor, pSrc, pDst);
         pNew.next = nfirst;
         nfirst = pNew;
         if (nlast == null) {
@@ -76,30 +76,30 @@ public class Lista {
         iN++;
     }
     
-    public void Insert(int inX, int pValue) {
+    public void Insert(int inX, double pValor, int pSrc, int pDst) {
         if (inX == 0) {
-            InsertFirst(pValue);
+            InsertFirst(pValor, pSrc, pDst);
             return;
         }
         if (inX == iN) {
-            InsertLast(pValue);
+            InsertLast(pValor, pSrc, pDst);
             return;
         }
-        Nodo pAux = nfirst;
+        Arista pAux = nfirst;
         for (int i = 1; i < inX; i++) {
             pAux = pAux.next;
         }
-        Nodo pNew = new Nodo(pValue, pAux.next);
+        Arista pNew = new Arista(pValor, pSrc, pDst,pAux.next);
         pAux.next = pNew;
         iN++;
     }
     
-    public void InsertLast(int pValue) {
+    public void InsertLast(double pValor, int pSrc, int pDst) {
         if (nlast == null) {
-            InsertFirst(pValue);
+            InsertFirst(pValor, pSrc, pDst);
             return;
         }
-        Nodo pNew = new Nodo(pValue);
+        Arista pNew = new Arista(pValor, pSrc, pDst);
         nlast.next = pNew;
         nlast = pNew;
         iN++;
@@ -107,26 +107,26 @@ public class Lista {
     
     //---------------------------------//
     
-    public Nodo getNode(int inX) {
-        Nodo pAux = nfirst;
+    public Arista getArista(int inX) {
+        Arista pAux = nfirst;
         for (int i = 1; i < inX; i++) {
             pAux = pAux.next;
         }
         return pAux;
     }
     
-    public int DeleteFirst() {
-        int pValue = nfirst.value;
+    public double DeleteFirst() {
+        double pValor = nfirst.valor;
         nfirst = nfirst.next;
         if (nfirst == null) {
             nlast = null;
         }
         
         iN--;
-        return pValue;
+        return pValor;
     }
     
-    public int Delete(int inX) {
+    public double Delete(int inX) {
         if (inX == 0) {
             return DeleteFirst();
         }
@@ -134,25 +134,25 @@ public class Lista {
             return DeleteLast();
         }
         
-        Nodo pPrev = getNode(inX - 1);
-        int pValue = pPrev.next.value;
+        Arista pPrev = getArista(inX - 1);
+        double pValor = pPrev.next.valor;
         pPrev.next = pPrev.next.next;
         
-        return pValue;
+        return pValor;
     }
     
-    public int DeleteLast() {
+    public double DeleteLast() {
         if (iN <= 1) {
             return DeleteFirst();
         }
         
-        Nodo pSecondLast = getNode(iN - 2);
-        int pValue = nlast.value;
+        Arista pSecondLast = getArista(iN - 2);
+        double pValor = nlast.valor;
         nlast = pSecondLast;
         nlast.next = null;
         
         iN--;
-        return pValue;
+        return pValor;
     }
     
     public void Clean() {

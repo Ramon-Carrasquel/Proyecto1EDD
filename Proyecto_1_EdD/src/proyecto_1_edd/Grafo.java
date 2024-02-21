@@ -5,22 +5,29 @@ package proyecto_1_edd;
 
 public class Grafo {
     
-    //private Lista aristas;
     private int maxNodos;
     private int[][] matriz = new int[20][20];
     
+    
     Grafo(int n) {
+        
         int y = n;
+        
         if(y < 4) {
             y = 4;
         }
+        else if(y > 20) {
+            y = 20;
+        }
+        
         this.maxNodos = y;
         
-        for (int i = 0; i < n; ++i) {
-            for (int j = 0; j < n; ++j) {
+        for (int i = 0; i < y; ++i) {
+            for (int j = 0; j < y; ++j) {
                 matriz[i][j] = 0;
             }
         }
+        
     }
     
     public void añadirCiudad() {
@@ -48,18 +55,18 @@ public class Grafo {
         else {
             if(maxNodos > 4) {
                 while(x < maxNodos) {
-
+                    
                     for(int i = 0; i < maxNodos; i++) {
                         matriz[i][x] = matriz[i][x + 1];
                     }
-
+                    
                     for(int i = 0; i < maxNodos; i++) {
                         matriz[x][i] = matriz[x + 1][i];
                     }
-
+                    
                     x++;
                 }
-               
+                
                 maxNodos--;
             }
         }
@@ -72,38 +79,30 @@ public class Grafo {
         }
     }
     
-    public void establCiudadPartida(int c) {
-        
-    }
-    
-    public void establCiudadLlegada(int c) {
-        
-    }
-    
-    public void dFS(int src) {
-        boolean[] visitado = new boolean[matriz.length];
-        dFSH(src, visitado);
-    }
-    
-    public void dFSH(int src, boolean[] visitado) {
-        if(visitado[src]) {
-            return;
-        }
-        else {
-            visitado[src] = true;
-            System.out.println(src + " = Visitado");
-        }
-        for(int i = 0; i < matriz[src].length; i++) {
-            if(matriz[src][i] != 0) {
-                dFSH(i, visitado);
+    public void borrarAristas() {
+            for(int i = 0; i < maxNodos; i++) {
+                for(int j = 0; j < maxNodos; j++) {
+                    matriz[i][j] = 0;
+                }
             }
         }
-        return;
-    }
     
     //---------------------------------//
     
+    public int getTamañoHorizontal(int src) {
+        return matriz[src].length;
+    }
+    
+    public double getValorArista(int src, int dst) {
+        return matriz[src][dst];
+    }
+    
+    public int tamaño() {
+        return maxNodos;
+    }
+    
     public void print() {
+        System.out.println();
         for(int i = 0; i < maxNodos; i++) {
             for(int j = 0; j < maxNodos; j++) {
                 System.out.print(matriz[i][j] + " ");

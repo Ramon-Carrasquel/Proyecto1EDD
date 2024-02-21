@@ -10,10 +10,13 @@ public class ListaArista {
     private String name;
     private int iN;
     
+    
     ListaArista(String n) {
+        
         nfirst = null;
         iN = 0;
         name = n;
+        
     }
     
     //---------------------------------//
@@ -51,7 +54,20 @@ public class ListaArista {
         System.out.println("FIN");
     }
     
-    public int SearchValue(int pSrc, int pDst) {
+    public double SearchValue(int pSrc, int pDst) {
+        Arista pAux = nfirst;
+        for (int i = 0; i < iN; i++) {
+            if(pAux.src == pSrc && pAux.dst == pDst) {
+                return pAux.valor;
+            }
+            else {
+                pAux = pAux.next;
+            }
+        }
+        return 0;
+    }
+    
+    public int SearchIndex(int pSrc, int pDst) {
         Arista pAux = nfirst;
         for (int i = 0; i < iN; i++) {
             if(pAux.src == pSrc && pAux.dst == pDst) {
@@ -155,7 +171,7 @@ public class ListaArista {
         return pValor;
     }
     
-    public void Clean() {
+    public void Clear() {
         this.nfirst = null;
         this.iN = 0;
     }

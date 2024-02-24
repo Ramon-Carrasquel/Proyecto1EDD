@@ -57,7 +57,7 @@ public class ListaArista {
     public double SearchValue(int pSrc, int pDst) {
         Arista pAux = nfirst;
         for (int i = 0; i < iN; i++) {
-            if(pAux.src == pSrc && pAux.dst == pDst) {
+            if((pAux.src == pSrc && pAux.dst == pDst) || (pAux.src == pDst && pAux.dst == pSrc)) {
                 return pAux.valor;
             }
             else {
@@ -70,8 +70,8 @@ public class ListaArista {
     public int SearchIndex(int pSrc, int pDst) {
         Arista pAux = nfirst;
         for (int i = 0; i < iN; i++) {
-            if(pAux.src == pSrc && pAux.dst == pDst) {
-                return i;
+            if((pAux.src == pSrc && pAux.dst == pDst) || (pAux.src == pDst && pAux.dst == pSrc)) {
+                return i + 1;
             }
             else {
                 pAux = pAux.next;
@@ -82,8 +82,17 @@ public class ListaArista {
     
     //---------------------------------//
     
-    public void InsertFirst(double pValor, int pSrc, int pDst) {
-        Arista pNew = new Arista(pValor, pSrc, pDst);
+    public void InsertFirst(int pSrc, int pDst, double pValor) {
+        for(int i = 0; i < iN; i++) {
+            if((getArista(i + 1).src == pSrc && getArista(i+1).dst == pDst) || (getArista(i + 1).dst == pSrc && getArista(i+1).src == pDst)) {
+                return;
+            }
+            else if(pSrc == pDst) {
+                return;
+            }
+        }
+        
+        Arista pNew = new Arista(pSrc, pDst, pValor);
         pNew.next = nfirst;
         nfirst = pNew;
         if (nlast == null) {
@@ -92,30 +101,49 @@ public class ListaArista {
         iN++;
     }
     
-    public void Insert(int inX, double pValor, int pSrc, int pDst) {
+    public void Insert(int inX, int pSrc, int pDst, double pValor) {
+        for(int i = 0; i < iN; i++) {
+            if((getArista(i + 1).src == pSrc && getArista(i+1).dst == pDst) || (getArista(i + 1).dst == pSrc && getArista(i+1).src == pDst)) {
+                return;
+            }
+            else if(pSrc == pDst) {
+                return;
+            }
+        }
+        
         if (inX == 0) {
-            InsertFirst(pValor, pSrc, pDst);
+            InsertFirst(pSrc, pDst, pValor);
             return;
         }
         if (inX == iN) {
-            InsertLast(pValor, pSrc, pDst);
+            InsertLast(pSrc, pDst, pValor);
             return;
         }
+        
         Arista pAux = nfirst;
         for (int i = 1; i < inX; i++) {
             pAux = pAux.next;
         }
-        Arista pNew = new Arista(pValor, pSrc, pDst,pAux.next);
+        Arista pNew = new Arista(pSrc, pDst, pValor, pAux.next);
         pAux.next = pNew;
         iN++;
     }
     
-    public void InsertLast(double pValor, int pSrc, int pDst) {
+    public void InsertLast(int pSrc, int pDst, double pValor) {
+        for(int i = 0; i < iN; i++) {
+            if((getArista(i + 1).src == pSrc && getArista(i+1).dst == pDst) || (getArista(i + 1).dst == pSrc && getArista(i+1).src == pDst)) {
+                return;
+            }
+            else if(pSrc == pDst) {
+                return;
+            }
+        }
+        
         if (nlast == null) {
-            InsertFirst(pValor, pSrc, pDst);
+            InsertFirst(pSrc, pDst, pValor);
             return;
         }
-        Arista pNew = new Arista(pValor, pSrc, pDst);
+        Arista pNew = new Arista(pSrc, pDst, pValor);
         nlast.next = pNew;
         nlast = pNew;
         iN++;

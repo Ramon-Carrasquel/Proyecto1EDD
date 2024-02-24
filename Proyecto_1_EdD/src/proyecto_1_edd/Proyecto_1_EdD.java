@@ -1,13 +1,29 @@
 
 package proyecto_1_edd;
 
-
+/**
+ * Esta clase comprende la inicialización de todo el programa; desde las interfaces hasta el funcionamiento interno del programa
+ * @author sebas
+ * @version 18/02/2024/A
+ */
 
 public class Proyecto_1_EdD {
     
+    /**
+     * Método que inicia el programa principal
+     * @param args 
+     */
+    
     public static void main(String[] args) {
         
-        int xCity = 8;
+        int cantHorm = 3;
+        int ciclos = 3;
+        
+        int ciudOrg = 1;
+        int ciudDes = 7;
+        
+        int xCity = 10;
+        
         if(xCity < 4) {
             xCity = 4;
         }
@@ -16,47 +32,46 @@ public class Proyecto_1_EdD {
         }
         
         
+        
         ListaArista a = new ListaArista("a");
         
-        a.InsertLast(234.94, 1, 4);
-        a.InsertLast(37.33, 2, 5);
-        a.InsertLast(115.67, 1, 7);
-        a.InsertLast(38.24, 1, 3);
-        a.InsertLast(95.14, 4, 0);
-        a.InsertLast(78.01, 1, 2);
-        a.InsertLast(29.92, 7, 3);
-        a.InsertLast(62.11, 5, 0);
+        a.InsertLast(2, 4, 34.9);
+        a.InsertLast(1, 9, 37.3);
+        a.InsertLast(1, 7, 115.6);
+        a.InsertLast(2, 3, 38.2);
+        a.InsertLast(4, 8, 95.1);
+        a.InsertLast(0, 2, 78.0);
+        a.InsertLast(7, 3, 29.9);
+        a.InsertLast(4, 0, 62.1);
+        a.InsertLast(6, 2, 43.5);
+        a.InsertLast(6, 1, 55.7);
+        a.InsertLast(5, 1, 51.9);
+        a.InsertLast(9, 0, 92.1);
+        a.InsertLast(8, 3, 23.5);
+        a.InsertLast(5, 6, 23.5);
+        a.InsertLast(8, 7, 56.5);
         
         a.ReadAll();
         System.out.println(a.Size());
         
         
-        Grafo graph = new Grafo(xCity);
+        Grafo graph = new Grafo(xCity, ciudOrg, ciudDes);
         
         for(int i = 0; i < a.Size() + 1; i++) {
-            graph.añadirArista(a.getArista(i).valor, a.getArista(i).src, a.getArista(i).dst);
+            graph.añadirArista(a.getArista(i).src, a.getArista(i).dst, a.getArista(i).valor);
         }
         
         graph.print();
         
         
-        /*
-        graph.borrarAristas();
-        a.Clear();
         
-        graph.print();
-        a.ReadAll();
-        */
+        SistemaHormiga sysh = new SistemaHormiga(graph, a, cantHorm, ciclos, 0, 0, 0, 0);
+        sysh.llenarArregloH(ciudOrg, graph);
         
+        //sysh.recorrerGrafo(sysh.getHormigas(0));
         
-        int x = a.SearchIndex(1, 2);
-        a.getArista(x).cantFeroInic(xCity);
-        System.out.println(a.getArista(x).feromona);
+        sysh.iniciarSimulacion();
         
-        Hormiga ant1 = new Hormiga(1,xCity, graph);
-        ant1.dFS();
-        
-        
-    }
+    }//Cierre del programa
     
 }

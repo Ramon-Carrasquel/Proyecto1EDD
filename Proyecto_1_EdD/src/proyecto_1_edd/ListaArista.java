@@ -1,7 +1,11 @@
 
 package proyecto_1_edd;
 
-
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.PrintWriter;
+import javax.swing.JOptionPane;
 
 public class ListaArista {
     
@@ -10,6 +14,8 @@ public class ListaArista {
     private String name;
     private int iN;
     
+    Lista lista1;
+    ListaArista lista2;    
     
     ListaArista(String n) {
         
@@ -19,7 +25,28 @@ public class ListaArista {
         
     }
     
+    public ListaArista(){
+        this.lista1 = null;
+        this.lista2 = null;
+    }      
+    
     //---------------------------------//
+    
+    public Lista getLista1(){
+        return lista1;
+    }
+    
+    public void setLista1(Lista lista1){
+        this.lista1 = lista1;
+    }
+    
+    public ListaArista getLista2(){
+        return lista2;
+    }
+    
+    public void setLista2(ListaArista lista2){
+        this.lista2 = lista2;
+    }       
     
     public boolean isEmpty() {
         return nfirst == null;
@@ -203,5 +230,75 @@ public class ListaArista {
         this.nfirst = null;
         this.iN = 0;
     }
-    
+
+    public static void escribir_texto(Lista ciudades, ListaArista aristas){
+        String contenido_actual = "";
+        String path = "test\\archivo.txt";
+        contenido_actual += "ciudades\n";
+        if (!ciudades.isEmpty()){
+            Nodo temp = ciudades.First();
+            for (int i = 0; i < ciudades.Size(); i++){
+                String contenidociudad =  Integer.toString(temp.getvalor());
+                contenido_actual += contenidociudad;
+                temp = temp.getnext();
+            }
+        }
+        contenido_actual += "aristas\n";
+        if (!aristas.isEmpty()){
+            Arista temp = aristas.First();
+            for (int i = 0; i < aristas.Size(); i++){
+                String contenidoaristas = temp.getsrc() + "," + temp.getdst() + "," + temp.getvalor() + "\n";
+                contenido_actual += contenidoaristas;
+                temp = temp.getnext();
+            }
+        }
+        try{
+            File file = new File(path);
+            PrintWriter pw = new PrintWriter(file);
+            pw.print(contenido_actual);
+            pw.close();
+        }catch (Exception e){
+          JOptionPane.showMessageDialog(null, "Error al escribir el archivo"); 
+        }
+    }
+ 
+    public static ListaArista leer_texto(){
+        Lista ciudades = new Lista("Ciudades");
+        ListaArista aristas = new ListaArista("Aristas");
+        String linea;
+        String path = "test\\archivo.txt";
+        File file = new File(path);
+        try {
+            if(!file.exists()){
+                file.createNewFile();
+            }else{
+                FileReader fr = new FileReader(file);
+                BufferedReader br = new BufferedReader(fr);
+                        int readingOp = 0;
+                while ((linea = br.readLine())!= null){
+                    if (!linea.isEmpty()){
+                        if (linea.trim().equals("ciudad")){
+                            readingOp = 0;
+                        }else if(linea.trim().equals("aristas")){
+                            readingOp = 1;
+                        }else if (readingOp ==0){
+                            ciudades.InsertLast(Integer.parseInt(linea.trim()));
+                        }else if (readingOp == 1){
+                            String[] contenido = linea.split(",");
+                            int src = Integer.parseInt(contenido[0]);
+                            int dst = Integer.parseInt(contenido[1]);
+                            double valor = Double.parseDouble(contenido[2]);
+                            aristas.InsertLast(src, dst, valor);
+                        }
+                    }
+                }
+            }
+        }catch (Exception e){
+            JOptionPane.showMessageDialog(null, "ERROR");
+        }ListaArista result = new ListaArista();
+    result.setLista1(ciudades);
+    result.setLista2(aristas);
+    return result;
+        
+    }   
 }

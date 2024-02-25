@@ -66,4 +66,32 @@ public class Arista {
         System.out.println(feromona);
     }
     
+    public int getsrc(){
+        return src;
+    }
+    
+    public void setsrc(int src){
+        this.src = src;
+    }
+    
+    public int getdst(){
+        return dst;
+    }
+    
+    public void setdst(int dst){
+        this.dst = dst;
+    }
+    
+    public double getvalor(){
+        return valor;
+    }
+    
+    public void setvalor(double valor){
+        this.valor = valor;
+    }
+    
+    public Arista getnext(){
+        return next;
+    }      
+    
 }

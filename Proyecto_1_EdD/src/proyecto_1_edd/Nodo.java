@@ -16,5 +16,11 @@ public class Nodo {
         this.value = value;
         this.next = next;
     }
+    public int getvalor(){
+        return value;
+    }
     
+    public Nodo getnext(){
+        return next;
+    }     
 }

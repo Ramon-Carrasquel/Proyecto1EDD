@@ -44,14 +44,19 @@ public class Lista {
     
     public void ReadAll() {
         Nodo pAux = nfirst;
-        for (int i = 0; i < iN; i++) {
-            System.out.print(pAux.value + " -> ");
-            pAux = pAux.next;
+        try {
+            for (int i = 0; i < iN; i++) {
+                System.out.print(pAux.value + " -> ");
+                pAux = pAux.next;
+            }
+        }
+        catch (NullPointerException e) {
+            System.out.println("FIN - INTERRUPIDO");
         }
         System.out.println("FIN");
     }
     
-    public int SearchValue(int pValue) {
+    public int SearchValue(double pValue) {
         Nodo pAux = nfirst;
         for (int i = 0; i < iN; i++) {
             if(pAux.value == pValue) {
@@ -77,7 +82,7 @@ public class Lista {
     
     //---------------------------------//
     
-    public void InsertFirst(int pValue) {
+    public void InsertFirst(double pValue) {
         Nodo pNew = new Nodo(pValue);
         pNew.next = nfirst;
         nfirst = pNew;
@@ -87,12 +92,12 @@ public class Lista {
         iN++;
     }
     
-    public void Insert(int inX, int pValue) {
+    public void Insert(int inX, double pValue) {
         if (inX == 0) {
             InsertFirst(pValue);
             return;
         }
-        if (inX == iN) {
+        if (inX == iN - 1) {
             InsertLast(pValue);
             return;
         }
@@ -105,7 +110,7 @@ public class Lista {
         iN++;
     }
     
-    public void InsertLast(int pValue) {
+    public void InsertLast(double pValue) {
         if (nlast == null) {
             InsertFirst(pValue);
             return;
@@ -126,8 +131,8 @@ public class Lista {
         return pAux;
     }
     
-    public int DeleteFirst() {
-        int pValue = nfirst.value;
+    public double DeleteFirst() {
+        double pValue = nfirst.value;
         nfirst = nfirst.next;
         if (nfirst == null) {
             nlast = null;
@@ -137,7 +142,7 @@ public class Lista {
         return pValue;
     }
     
-    public int Delete(int inX) {
+    public double Delete(int inX) {
         if (inX == 0) {
             return DeleteFirst();
         }
@@ -146,19 +151,21 @@ public class Lista {
         }
         
         Nodo pPrev = getNode(inX - 1);
-        int pValue = pPrev.next.value;
+        double pValue = pPrev.next.value;
         pPrev.next = pPrev.next.next;
+        
+        iN--;
         
         return pValue;
     }
     
-    public int DeleteLast() {
+    public double DeleteLast() {
         if (iN <= 1) {
             return DeleteFirst();
         }
         
         Nodo pSecondLast = getNode(iN - 2);
-        int pValue = nlast.value;
+        double pValue = nlast.value;
         nlast = pSecondLast;
         nlast.next = null;
         
@@ -166,7 +173,7 @@ public class Lista {
         return pValue;
     }
     
-    public void Clean() {
+    public void Clear() {
         this.nfirst = null;
         this.iN = 0;
     }

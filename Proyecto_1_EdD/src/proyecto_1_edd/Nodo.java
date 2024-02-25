@@ -5,15 +5,26 @@ package proyecto_1_edd;
 
 public class Nodo {
     
-    int value;
+    double value;
     Nodo next;
     
-    Nodo(int value) {
-        this.value = value;
+    Nodo(double value_) {
+        if(value < 0) {
+            value = 0;
+        }
+        else {
+            value = value_;
+        }
     }
     
-    Nodo(int value, Nodo next) {
-        this.value = value;
+    Nodo(double value_, Nodo next) {
+        if(value < 0) {
+            value = 0;
+        }
+        else {
+            value = value_;
+        }
+        
         this.next = next;
     }
     

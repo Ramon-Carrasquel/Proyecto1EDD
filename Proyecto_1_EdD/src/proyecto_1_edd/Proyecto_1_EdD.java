@@ -16,15 +16,15 @@ public class Proyecto_1_EdD {
     
     public static void main(String[] args) {
         
-        System.setProperty("org.graphstream.ui", "swing");
+        //System.setProperty("org.graphstream.ui", "swing");
         
-        int cantHorm = 120;
-        int ciclos = 7;
+        int cantHorm = 3;
+        int ciclos = 3;
         
-        int ciudOrg = 4;
-        int ciudDes = 11;
+        int ciudOrg = 1;
+        int ciudDes = 6;
         
-        int xCity = 12;
+        int xCity = 6;
         
         
         
@@ -34,22 +34,12 @@ public class Proyecto_1_EdD {
         a.InsertLast(1, 3, 34);
         a.InsertLast(0, 3, 24);
         a.InsertLast(0, 2, 72);
-        a.InsertLast(0, 9, 39);
-        a.InsertLast(6, 3, 66);
-        a.InsertLast(4, 6, 88);
-        a.InsertLast(1, 7, 74);
+        a.InsertLast(0, 5, 39);
+        a.InsertLast(5, 3, 66);
+        a.InsertLast(4, 5, 88);
+        a.InsertLast(1, 4, 74);
         a.InsertLast(1, 2, 17);
-        a.InsertLast(0, 3, 78);
-        a.InsertLast(6, 5, 59);
-        a.InsertLast(0, 8, 18);
-        a.InsertLast(8, 9, 49);
-        a.InsertLast(8, 1, 27);
-        a.InsertLast(2, 11, 43);
-        a.InsertLast(7, 11, 67);
-        a.InsertLast(6, 10, 39);
-        a.InsertLast(3, 10, 33);
-        a.InsertLast(4, 9, 32);
-        a.InsertLast(5, 8, 53);
+        a.InsertLast(4, 3, 78);
 
         
         
@@ -68,12 +58,12 @@ public class Proyecto_1_EdD {
         
         
         SistemaHormiga sysh = new SistemaHormiga(graph, a, cantHorm, ciclos, 0, 0, 0, 0);
-        sysh.llenarArregloH(ciudOrg, graph);
+        sysh.llenarArregloH(ciudOrg);
         
         
-        // sysh.iniciarSimulacion(); //
+        sysh.iniciarSimulacion();
         
-        
+        //sysh.caminoOptimo(graph, graph.getCiudadOrigen());
         
     }//Cierre del programa
     

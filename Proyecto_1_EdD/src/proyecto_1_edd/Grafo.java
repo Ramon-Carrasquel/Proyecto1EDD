@@ -218,9 +218,9 @@ public class Grafo {
     
     //---------------------------------//
     
-    public void printDestino() {
-        System.out.println(ciudadDestino);
-    }
+    /**
+     * Método que imprime todo el grafo
+     */
     
     public void print() {
         System.out.println();
@@ -231,6 +231,6 @@ public class Grafo {
             System.out.println();
         }
         System.out.println();
-    }
+    }//Cierre del método
     
 }

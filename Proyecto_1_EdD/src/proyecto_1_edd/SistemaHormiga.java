@@ -3,22 +3,37 @@ package proyecto_1_edd;
 
 import java.lang.Math;
 
-
+/**
+ * Esta clase define el funcionamiento de los recorridos del grafo
+ * @author sebas
+ * @version 20/02/2024/A
+ */
 
 public class SistemaHormiga {
     
-    int a;                          //grado de importancia de la feromona
-    int b;                          //grado de visibilidad
-    int C;                          //cantidad de ciclos
-    double evaporacion;             //factor de evaporacion
-    int q;                          //aprendizaje
-    int h;                          //cantidad de hormigas
+    //Campos de la clase
+    int a;
+    int b;
+    int C;
+    double evaporacion;
+    int q;
+    int h;
     int[] caminoOptimoCic;
-    Hormiga[] hormigas;             //cantidad de hormigas (lista)
+    Hormiga[] hormigas;
     Grafo grafoSpec;
     ListaArista aristas;
     
-    
+    /**
+     * 
+     * @param grafoSpec Define el grafo a utilizar
+     * @param aristas Define la lista enlazada que contiene las aristas del grafo
+     * @param h_ Define la cantidad de hormigas en la simulación
+     * @param C_ Define la cantidad de ciclos a ejecutar en la simulación
+     * @param a_ Define el grado de importancia de la feromona (generalmente siendo 1)
+     * @param b_ Define el grado de visibilidad (generalmente siendo 2)
+     * @param q_ Define el aprendizaje (generalmente siendo 1)
+     * @param evaporacion_ Define el factor de evaporacion
+     */
     
     SistemaHormiga(Grafo grafoSpec, ListaArista aristas, int h_, int C_, int a_, int b_, int q_, double evaporacion_) {
         
@@ -71,47 +86,49 @@ public class SistemaHormiga {
             evaporacion = evaporacion_;
         }
         
-    }
+    }//Cierre del constructor
     
     //---------------------------------//
     
-    public void llenarArregloH(int posicion_, Grafo grafoSpec_) {
+    /**
+     * Método que llena un arreglo con la cantidad de hormigas en la simulación
+     * @param posicion_ Establece la ciudad en la cual se encuentra la hormiga
+     */
+    
+    public void llenarArregloH(int posicion_) {
         for(int i = 0; i < h; i++) {
-            Hormiga ant = new Hormiga(posicion_, grafoSpec_);
+            Hormiga ant = new Hormiga(posicion_, grafoSpec);
             hormigas[i] = ant;
         }
-    }
+    }//Cierre del método
     
     //---------------------------------//
+    
+    /**
+     * Método que devuelve una arista de la lista enlazada "aristas" de la clase
+     * @param inX Define el índice para buscar la arista
+     * @return La arista en el índice "inX"
+     */
     
     public Arista getAristas(int inX) {
         return aristas.getArista(inX);
-    }
+    }//Cierre del método
+    
+    /**
+     * Método que devuelve una hormiga de la lista "hormigas" de la clase
+     * @param inXDefine el índice para buscar la hormiga
+     * @return La hormiga en el índice "inX"
+     */
     
     public Hormiga getHormigas(int inX) {
         return hormigas[inX];
-    }
-    
-    public void printHormigas() {
-        for(int i = 0; i < h; i++) {
-            System.out.println();
-            System.out.println("Hormiga " + (i + 1));
-            hormigas[i].printHormiga();
-        }
-        System.out.println();
-    }
-    
-    public void setCaminoOptimoCiclo(int[] caminoCorto) {
-        caminoOptimoCic = caminoCorto;
-    }
-    
-    public void resetCaminoOptimoCiclo() {
-        for(int i = 0; i < caminoOptimoCic.length; i++) {
-            caminoOptimoCic[i] = 0;
-        }
-    }
+    }//Cierre del método
     
     //---------------------------------//
+    
+    /**
+     * Método que inicia la simulación
+     */
     
     public void iniciarSimulacion() {
         System.out.println(">->->->->->->->->->->->->->->->->->->->->->->->->->");
@@ -137,7 +154,11 @@ public class SistemaHormiga {
         System.out.println("                      Simulacion");
         System.out.println("                      Finalizada");
         System.out.println("---------------------------------------------------");
-    }
+    }//Cierre del método
+    
+    /**
+     * Método que inicia el ciclo
+     */
     
     public void iniciarCiclo() {
         
@@ -158,7 +179,13 @@ public class SistemaHormiga {
             hormigas[i].aristasVisitadas.ReadAll();
         }
         
-    }
+    }//Cierre del método
+    
+    /**
+     * Método que genera un número aleatorio para escoger una de entre todas las probabilidades de los caminos disponibles para la hormiga
+     * @param listaProb Establece la lista con las probabilidades de los caminos
+     * @return El índice ---------------------------------------------------------------------------------------------------------
+     */
     
     public int ruletaAleatoria(double[] listaProb) {
         double numAlt = Math.random();
@@ -176,9 +203,14 @@ public class SistemaHormiga {
         
         
         throw new RuntimeException("Arreglo de probabilidades inválido.");
-    }
+    }//Cierre del método
     
     //---------------------------------//
+    
+    /**
+     * Método que recorre el grafo mediante una hormiga en concreto
+     * @param hormiga Establece la hormiga que ejecutará el recorrido
+     */
     
     public void recorrerGrafo(Hormiga hormiga) {
         hormiga.printHormiga();
@@ -192,6 +224,7 @@ public class SistemaHormiga {
             try {
                 Arista seleccionArista = selectCamino(hormiga);
                 hormiga.insertarAristaVisitada(seleccionArista);
+                
                 if(!hormiga.visitados[seleccionArista.dst]) {
                     hormiga.setPosicion(seleccionArista.dst + 1);
                     hormiga.setCiudadActualVisitada();
@@ -204,7 +237,7 @@ public class SistemaHormiga {
                     }
                     
                     
-                    hormiga.printHormiga();
+                    
                     System.out.println("Siguiente ciudad ---> " + (seleccionArista.dst + 1));
                     
                     hormiga.printHormiga();
@@ -222,7 +255,7 @@ public class SistemaHormiga {
                     }
                     
                     
-                    hormiga.printHormiga();
+                    
                     System.out.println("Siguiente ciudad ---> " + (seleccionArista.src + 1));
                     
                     hormiga.printHormiga();
@@ -238,7 +271,13 @@ public class SistemaHormiga {
             
         }
         
-    }
+    }//Cierre del método
+    
+    /**
+     * Método que selecciona uno de los distintos caminos disponibles para la hormiga
+     * @param hormiga Establece la hormiga que ejecutará la selección del camino
+     * @return La arista (el camino) escogido por la hormiga
+     */
     
     public Arista selectCamino(Hormiga hormiga) {
         int posicion = hormiga.posicion - 1;
@@ -261,7 +300,15 @@ public class SistemaHormiga {
         
         return caminoDestino;
         
-    }
+    }//Cierre del método
+    
+    /**
+     * Método que sirve como la fórmula del cálculo de probabilidades para los caminos disponibles de la hormiga
+     * @param hormiga Establece la hormiga que se usará para los cálculos
+     * @param posicion_ Establece la ciudad en la que se encuentra la hormiga como un índice
+     * @param cantAristas Establece la cantidad de aristas o caminos disponibles para la hormiga
+     * @return Lista con las probabilidades de los caminos
+     */
     
     public double[] probabilidades(Hormiga hormiga, int posicion_, int cantAristas) {
         int posicion = posicion_;
@@ -298,7 +345,13 @@ public class SistemaHormiga {
         }
         
         return listaProbabilidad;
-    }
+    }//Cierre del método
+    
+    /**
+     * Método que sirve como fórmula del cálculo de la sumatoria, la cual es un complemento de la fórmula del método "probabilidades"
+     * @param hormiga Establece la hormiga que se usará para los cálculos
+     * @return El resultado de la sumatoria
+     */
     
     public double sumatoria(Hormiga hormiga) {
         int posicion = hormiga.posicion - 1;
@@ -323,16 +376,14 @@ public class SistemaHormiga {
         }
         
         return suma;
-    }
+    }//Cierre del método
     
     //---------------------------------//
     
-    /*
-    <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-    RECORDATORIO PERSONAL: Resolver el problema de la generación de las feromonas
-    (dan resultados muy sospechosos y poco fiables)
-    >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-    */
+    /**
+     * Método que actualiza los niveles de feromona de las aristas mediante ciertos parámetros
+     * @param arista Establece la arista a la cual se le va a actualizar el nivel de feromona
+     */
     
     public void actuFeromona(Arista arista) {
         double newFeromona = 0;
@@ -340,7 +391,13 @@ public class SistemaHormiga {
         newFeromona = evapFeromona(arista) * arista.feromona + aumeFeromona(arista);
         
         arista.setFero(newFeromona);
-    }
+    }//Cierre del método
+    
+    /**
+     * Método que genera el aumento de la feromona de la arista
+     * @param arista Establece la arista a la cual se le va a aumentar la feromona
+     * @return El delta-feromona (el aumento de la feromona)
+     */
     
     public double aumeFeromona(Arista arista) {
         Hormiga[] hormigasArista = new Hormiga[h];
@@ -367,7 +424,12 @@ public class SistemaHormiga {
         //deltaFeromona += arista.feromona;
         
         return deltaFeromona;
-    }
+    }//Cierre del método
+    
+    /**
+     * Método que genera el factor de evaporación de la feromona de la arista
+     * @return El factor de evaporación
+     */
     
     public double evapFeromona(Arista arista) {
         double facEvaporacion = 0;
@@ -375,9 +437,16 @@ public class SistemaHormiga {
         facEvaporacion = (1.0 - evaporacion);
         
         return facEvaporacion;
-    }
+    }//Cierre del método
     
     //---------------------------------//
+    
+    /**
+     * Método que sirve como una fórmula de potenciación
+     * @param base Establece la base
+     * @param power Establece el exponente
+     * @return El resultado de la potenciación
+     */
     
     public double potenciaD(double base, int power) {
         double resultado = 0;
@@ -388,38 +457,132 @@ public class SistemaHormiga {
             resultado = base * base;
         }
         return resultado;
-    }
+    }//Cierre del método
+    
+    /**
+     * Método que calcula el factor de visibilidad de una ciudad
+     * @param dist define la distancia de la arista que conecta a una ciudad
+     * @return El factor de visibilidad
+     */
     
     public double factorVisibilidad(double dist) {
         double distancia = q / dist;
         return distancia;
-    }
+    }//Cierre del método
     
     //---------------------------------//
     
-    /*
-    <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-    RECORDATORIO PERSONAL: Crear las funciones que devuelvan la información necesaria
-    y propuesta por el profesor (cantidad de hormigas) *(camino óptimo para cada hormiga,
-    recorrido realizado y distancia del recorrido)* (valor de feromona de cada arista)
-    **(camino óptimo entre la ciudad de origen y la de destino)**
-    >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-    */
+    /**
+     * Método que devuelve el índice de la ciudad adyacente a la posición actual
+     * @param distance Define una lista con las distancias de las ciudades
+     * @param visited Define una lista con buleanos que representan si una ciudad fue visitada o no
+     * @return El índice de la ciudad más cercana
+     */
+    
+    public static int findMinDistVertex(double[] distance, boolean [] visited) {
+		
+	int minVertex = -1;
+        
+	for(int i = 0; i < distance.length; i++) {
+		if(visited[i] == false && (minVertex == -1 || distance[i] < distance[minVertex])) {
+			minVertex = i;
+		}
+	}
+	return minVertex;
+    }//Cierre del método
+    
+    /**
+     * Método que encuentra el camino más óptimo del grafo en cuestión entre dos ciudades
+     * @param graph Establece el grafo a utilizar
+     * @param src Establece la posición inicial del recorrido
+     */
+    
+    public void caminoOptimo(Grafo graph, int src) {
+        double [] distance = new double[graph.tamaño()];
+	int source = src - 1;
+	boolean [] visited = new boolean[graph.tamaño()];
+		
+	distance[source] = 0;
+        
+        for (int i = 0; i < graph.tamaño(); i++) {
+            if(i == source) continue;
+            distance[i] = Integer.MAX_VALUE;
+	}
+        
+        
+        for(int i = 0; i < graph.tamaño(); i++) {
+            int minDistVertex = findMinDistVertex(distance, visited);
+            
+            System.out.println(minDistVertex + 1);
+            
+            
+            visited[minDistVertex] = true;
+
+            
+            if(graph.getCiudadDestino() - 1 == minDistVertex) {
+                break;
+            }
+            
+            
+            for(int j = 0; j < graph.tamaño(); j++) {
+                if(graph.getValorArista(minDistVertex, j) != 0 && visited[j] == false && distance[minDistVertex] <= Integer.MAX_VALUE) {
+                    double newDist = distance[minDistVertex] + graph.getValorArista(minDistVertex, j);
+                            
+                    if(newDist < distance[j]) {
+                        distance[j] = newDist;
+                    }
+                }
+            }
+        }
+        
+        
+        
+        for(int i = 0; i < graph.tamaño(); i++) {
+            if(graph.getCiudadDestino() - 1 == i) {
+                System.out.println("Vertex : " + (i + 1) + " & Distance from Source : " + distance[i]);
+            }
+	}
+    }//Cierre del método
+    
+    //---------------------------------//
+    
+    /**
+     * Método que retorna la cantidad de hormigas en la simulación
+     * @return Cantidad de hormigas ("h")
+     */
     
     public int cantidadHormigas() {
         return h;
-    }
+    }//Cierre del método
+    
+    /**
+     * Método que retorna la lista del recorrido realizado por una hormiga en concreto
+     * @param hormiga Establece la hormiga en concreto
+     * @return Lista del recorrido hecho por la hormiga
+     */
     
     public int[] recorridoRealizado(Hormiga hormiga) {
         return hormiga.ciudadesVisitadas;
-    }
+    }//Cierre del método
+    
+    /**
+     * Método que retorna el trayecto realizado por una hormiga en concreto
+     * @param hormiga Establece la hormiga en concreto
+     * @return El trayecto hecho por la hormiga
+     */
     
     public double distanciaRecorrida(Hormiga hormiga) {
         return hormiga.trayecto;
-    }
+    }//Cierre del método
+    
+    /**
+     * Método que devuelve el valor de feromona de una arista en concreto
+     * @param arista Establece la arista en concreto
+     * @return La feromona de la arista
+     */
     
     public double valorFeromona(Arista arista) {
         return arista.feromona;
-    }
+    }//Cierre del método
     
 }

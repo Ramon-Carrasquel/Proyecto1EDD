@@ -5,7 +5,6 @@ package proyecto_1_edd;
 
 public class Hormiga {
     
-    int nC;                                                                     //cantidad de ciudades
     int posicion;                                                               //posicion actual de la hormiga
     int posicionOriginal;                                                       //posicion original de la hormiga
     boolean[] visitados;                                                        //ciudades visitadas
@@ -15,9 +14,8 @@ public class Hormiga {
     ListaArista aristasVisitadas = new ListaArista("aristasVisitadas");       //aristas visitadas por la hormiga
     
     
-    Hormiga(int posicion, int nC, Grafo grafoSpec) {
+    Hormiga(int posicion, Grafo grafoSpec) {
         
-        this.nC = nC;
         this.posicion = posicion;
         this.posicionOriginal = posicion;
         this.ciudadesVisitadas = new int[grafoSpec.tamaño()];
@@ -69,21 +67,20 @@ public class Hormiga {
         this.posicion = x;
     }
     
-    /*
-    <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-    RECORDATORIO PERSONAL: Preferiblemente arreglar el "display" de la función de abajo
-    (no muestra correctamente las ciudades recorridas en orden)
-    >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-    */
-    
     public void setCiudadVisitada(int x) {
         for(int i = 0; i < ciudadesVisitadas.length; i++) {
-            if(ciudadesVisitadas[i] != 0) {
+            if(ciudadesVisitadas[i] == 0) {
                 ciudadesVisitadas[i] = x;
                 break;
             }
         }
     }
+    
+    public void insertarAristaVisitada(Arista arista) {
+        aristasVisitadas.InsertLast(arista.src, arista.dst, arista.valor);
+    }
+    
+    //---------------------------------//
     
     public void resetVisitados() {
         for(int i = 0; i < visitados.length; i++) {
@@ -96,14 +93,14 @@ public class Hormiga {
         posicion = posicionOriginal;
     }
     
-    public void resetTrayecto() {
+    public void resetCiudadesVisitadas() {
         for(int i = 0; i < ciudadesVisitadas.length; i++) {
             ciudadesVisitadas[i] = 0;
         }
         ciudadesVisitadas[0] = posicion;
     }
     
-    public void resetCiudadesVisitadas() {
+    public void resetTrayecto() {
         trayecto = 0;
     }
     
@@ -112,10 +109,6 @@ public class Hormiga {
         for(int i = 0; i < tamaño; i++) {
             aristasVisitadas.DeleteLast();
         }
-    }
-    
-    public void insertarAristaVisitada(Arista arista) {
-        aristasVisitadas.InsertLast(arista.src, arista.dst, arista.valor);
     }
     
     //---------------------------------//
@@ -139,10 +132,12 @@ public class Hormiga {
     public void printCiudadesVisitadas() {
         for(int i = 0; i < ciudadesVisitadas.length; i++) {
             if(ciudadesVisitadas[i] == 0) {
+                System.out.print("Fin");
                 break;
             }
-            System.out.println(ciudadesVisitadas[i]);
+            System.out.print(ciudadesVisitadas[i] + " ");
         }
+        System.out.println();
     }
     
 }

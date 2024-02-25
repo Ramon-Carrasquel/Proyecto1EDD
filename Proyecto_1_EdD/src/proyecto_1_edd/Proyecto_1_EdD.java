@@ -16,40 +16,42 @@ public class Proyecto_1_EdD {
     
     public static void main(String[] args) {
         
-        int cantHorm = 3;
-        int ciclos = 3;
+        System.setProperty("org.graphstream.ui", "swing");
         
-        int ciudOrg = 1;
-        int ciudDes = 7;
+        int cantHorm = 120;
+        int ciclos = 7;
         
-        int xCity = 10;
+        int ciudOrg = 4;
+        int ciudDes = 11;
         
-        if(xCity < 4) {
-            xCity = 4;
-        }
-        else if(xCity > 20) {
-            xCity = 20;
-        }
+        int xCity = 12;
         
         
         
         ListaArista a = new ListaArista("a");
         
-        a.InsertLast(2, 4, 34.9);
-        a.InsertLast(1, 9, 37.3);
-        a.InsertLast(1, 7, 115.6);
-        a.InsertLast(2, 3, 38.2);
-        a.InsertLast(4, 8, 95.1);
-        a.InsertLast(0, 2, 78.0);
-        a.InsertLast(7, 3, 29.9);
-        a.InsertLast(4, 0, 62.1);
-        a.InsertLast(6, 2, 43.5);
-        a.InsertLast(6, 1, 55.7);
-        a.InsertLast(5, 1, 51.9);
-        a.InsertLast(9, 0, 92.1);
-        a.InsertLast(8, 3, 23.5);
-        a.InsertLast(5, 6, 23.5);
-        a.InsertLast(8, 7, 56.5);
+        
+        a.InsertLast(1, 3, 34);
+        a.InsertLast(0, 3, 24);
+        a.InsertLast(0, 2, 72);
+        a.InsertLast(0, 9, 39);
+        a.InsertLast(6, 3, 66);
+        a.InsertLast(4, 6, 88);
+        a.InsertLast(1, 7, 74);
+        a.InsertLast(1, 2, 17);
+        a.InsertLast(0, 3, 78);
+        a.InsertLast(6, 5, 59);
+        a.InsertLast(0, 8, 18);
+        a.InsertLast(8, 9, 49);
+        a.InsertLast(8, 1, 27);
+        a.InsertLast(2, 11, 43);
+        a.InsertLast(7, 11, 67);
+        a.InsertLast(6, 10, 39);
+        a.InsertLast(3, 10, 33);
+        a.InsertLast(4, 9, 32);
+        a.InsertLast(5, 8, 53);
+
+        
         
         a.ReadAll();
         System.out.println(a.Size());
@@ -68,9 +70,10 @@ public class Proyecto_1_EdD {
         SistemaHormiga sysh = new SistemaHormiga(graph, a, cantHorm, ciclos, 0, 0, 0, 0);
         sysh.llenarArregloH(ciudOrg, graph);
         
-        //sysh.recorrerGrafo(sysh.getHormigas(0));
         
-        sysh.iniciarSimulacion();
+        // sysh.iniciarSimulacion(); //
+        
+        
         
     }//Cierre del programa
     

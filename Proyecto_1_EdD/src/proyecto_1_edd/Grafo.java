@@ -198,6 +198,24 @@ public class Grafo {
         return maxNodos;
     }//Cierre del método
     
+    /**
+     * Método que devuelve la ciudad origen donde empieza el recorrido
+     * @return La ciudad de origen
+     */
+    
+    public int getCiudadOrigen() {
+        return ciudadOrigen;
+    }//Cierre del método
+    
+    /**
+     * Método que devuelve la ciudad destino donde termina el recorrido
+     * @return La ciudad de destino
+     */
+    
+    public int getCiudadDestino() {
+        return ciudadDestino;
+    }//Cierre del método
+    
     //---------------------------------//
     
     public void printDestino() {

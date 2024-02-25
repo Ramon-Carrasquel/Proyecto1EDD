@@ -33,7 +33,6 @@ public class Arista {
             src = ciudad1;
             dst = ciudad2;
         }
-        
     }
     
     Arista(int src_, int dst_, double value, Arista next) {
@@ -51,7 +50,6 @@ public class Arista {
             dst = ciudad2;
         }
         this.next = next;
-        
     }
     
     public void cantFeroInic(int cantCiudades) {

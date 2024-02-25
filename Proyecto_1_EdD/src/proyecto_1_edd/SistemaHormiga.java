@@ -13,6 +13,7 @@ public class SistemaHormiga {
     double evaporacion;             //factor de evaporacion
     int q;                          //aprendizaje
     int h;                          //cantidad de hormigas
+    int[] caminoOptimoCic;
     Hormiga[] hormigas;             //cantidad de hormigas (lista)
     Grafo grafoSpec;
     ListaArista aristas;
@@ -23,6 +24,7 @@ public class SistemaHormiga {
         
         this.grafoSpec = grafoSpec;
         this.aristas = aristas;
+        caminoOptimoCic = new int[grafoSpec.tamaño()];
         if(h_ <= 0) {
             h = 1;
         }
@@ -75,7 +77,7 @@ public class SistemaHormiga {
     
     public void llenarArregloH(int posicion_, Grafo grafoSpec_) {
         for(int i = 0; i < h; i++) {
-            Hormiga ant = new Hormiga(posicion_, grafoSpec.tamaño(), grafoSpec_);
+            Hormiga ant = new Hormiga(posicion_, grafoSpec_);
             hormigas[i] = ant;
         }
     }
@@ -99,9 +101,25 @@ public class SistemaHormiga {
         System.out.println();
     }
     
+    public void setCaminoOptimoCiclo(int[] caminoCorto) {
+        caminoOptimoCic = caminoCorto;
+    }
+    
+    public void resetCaminoOptimoCiclo() {
+        for(int i = 0; i < caminoOptimoCic.length; i++) {
+            caminoOptimoCic[i] = 0;
+        }
+    }
+    
     //---------------------------------//
     
     public void iniciarSimulacion() {
+        System.out.println(">->->->->->->->->->->->->->->->->->->->->->->->->->");
+        System.out.println("                      Simulacion");
+        System.out.println("                     Inicializada");
+        System.out.println("<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<");
+        System.out.println();
+        
         for(int i = 0; i < C; i++) {
             System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
             System.out.println("             Ciclo " + (i + 1));
@@ -113,6 +131,12 @@ public class SistemaHormiga {
                 aristas.getArista(j + 1).printFeromona();
             }
         }
+        
+        System.out.println();
+        System.out.println("---------------------------------------------------");
+        System.out.println("                      Simulacion");
+        System.out.println("                      Finalizada");
+        System.out.println("---------------------------------------------------");
     }
     
     public void iniciarCiclo() {
@@ -130,6 +154,7 @@ public class SistemaHormiga {
             System.out.println("------------------------------");
             recorrerGrafo(hormigas[i]);
             hormigas[i].printCiudadesVisitadas();
+            
             hormigas[i].aristasVisitadas.ReadAll();
         }
         
@@ -159,6 +184,9 @@ public class SistemaHormiga {
         hormiga.printHormiga();
         for(int i = 0; i < grafoSpec.tamaño(); i++) {
             if(grafoSpec.ciudadDestino == hormiga.posicion) {
+                System.out.println("DESTINO ALCANZADO");
+                hormiga.printTrayecto();
+                System.out.println();
                 return;
             }
             try {
@@ -169,7 +197,6 @@ public class SistemaHormiga {
                     hormiga.setCiudadActualVisitada();
                     hormiga.insertarAristaVisitada(seleccionArista);
                     hormiga.añadirDistanciaTrayecto(seleccionArista.valor);
-                    hormiga.printCiudadesVisitadas();
                     
                     hormiga.setCiudadVisitada(seleccionArista.dst + 1);
                     if(hormiga.aristasVisitadas.Last().feromona == 1) {
@@ -179,10 +206,7 @@ public class SistemaHormiga {
                     
                     hormiga.printHormiga();
                     System.out.println("Siguiente ciudad ---> " + (seleccionArista.dst + 1));
-                    hormiga.printVisitados();
-                    System.out.println();
                     
-                    grafoSpec.printDestino();
                     hormiga.printHormiga();
                     System.out.println();
                 }
@@ -191,7 +215,6 @@ public class SistemaHormiga {
                     hormiga.setCiudadActualVisitada();
                     hormiga.insertarAristaVisitada(seleccionArista);
                     hormiga.añadirDistanciaTrayecto(seleccionArista.valor);
-                    hormiga.printCiudadesVisitadas();
                     
                     hormiga.setCiudadVisitada(seleccionArista.src + 1);
                     if(hormiga.aristasVisitadas.Last().feromona == 1) {
@@ -201,16 +224,13 @@ public class SistemaHormiga {
                     
                     hormiga.printHormiga();
                     System.out.println("Siguiente ciudad ---> " + (seleccionArista.src + 1));
-                    hormiga.printVisitados();
-                    System.out.println();
                     
-                    grafoSpec.printDestino();
                     hormiga.printHormiga();
                     System.out.println();
                 }
             }
             catch(RuntimeException e) {
-                System.out.println("WALKTHROUGH END");
+                System.out.println("CALLE CIEGA");
                 hormiga.printTrayecto();
                 System.out.println();
                 break;
@@ -235,11 +255,6 @@ public class SistemaHormiga {
         }
         
         double[] listaRuleta = probabilidades(hormiga, posicion, tamañoProb);
-        
-        System.out.println();
-        for(int i = 0; i < listaRuleta.length; i++) {
-            System.out.println(listaRuleta[i]);
-        }
         
         int inXCaminoElegido = ruletaAleatoria(listaRuleta);
         Arista caminoDestino = aristas_.getArista(inXCaminoElegido + 1);
@@ -267,8 +282,7 @@ public class SistemaHormiga {
                     
                     double feromona_ = ari.feromona;
                     double distancia = ari.valor;
-
-                    System.out.println(distancia);
+                    
 
                     prob = (potenciaD(feromona_, a) * potenciaD(factorVisibilidad(distancia), b))
                             / sumatoria(hormiga);
@@ -279,8 +293,6 @@ public class SistemaHormiga {
                             break;
                         }
                     }
-
-                    System.out.println(prob);
                 }
             }
         }
@@ -325,28 +337,34 @@ public class SistemaHormiga {
     public void actuFeromona(Arista arista) {
         double newFeromona = 0;
         
-        newFeromona = evapFeromona(arista) + aumeFeromona(arista);
+        newFeromona = evapFeromona(arista) * arista.feromona + aumeFeromona(arista);
         
         arista.setFero(newFeromona);
     }
     
     public double aumeFeromona(Arista arista) {
-        Hormiga[] hormigasAristaL = new Hormiga[h];
+        Hormiga[] hormigasArista = new Hormiga[h];
         for(int i = 0; i < h; i++) {
             int inXArista = hormigas[i].aristasVisitadas.SearchIndex(arista.src, arista.dst);
             Arista specArista = hormigas[i].aristasVisitadas.getArista(inXArista);
             if((specArista.src == arista.src && specArista.dst == arista.dst) || (specArista.src == arista.dst && specArista.dst == arista.src)) {
-                hormigasAristaL[i] = hormigas[i];
+                hormigasArista[i] = hormigas[i];
             }
         }
         
         double deltaFeromona = 0;
-        for(int i = 0; i < hormigasAristaL.length; i++) {
-            if(hormigasAristaL[i] != null) {
+        for(int i = 0; i < hormigasArista.length; i++) {
+            if(hormigasArista.length == 0) {
+                deltaFeromona = 0;
+                break;
+            }
+            if(hormigasArista[i] != null) {
                 System.out.println(i + "----------------------------");
-                deltaFeromona += q / hormigasAristaL[i].trayecto;
+                deltaFeromona += q / arista.valor; //hormigasArista[i].trayecto;
             }
         }
+        
+        //deltaFeromona += arista.feromona;
         
         return deltaFeromona;
     }
@@ -354,7 +372,7 @@ public class SistemaHormiga {
     public double evapFeromona(Arista arista) {
         double facEvaporacion = 0;
         
-        facEvaporacion = (1 - evaporacion) * arista.feromona;
+        facEvaporacion = (1.0 - evaporacion);
         
         return facEvaporacion;
     }
@@ -383,13 +401,25 @@ public class SistemaHormiga {
     <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     RECORDATORIO PERSONAL: Crear las funciones que devuelvan la información necesaria
     y propuesta por el profesor (cantidad de hormigas) *(camino óptimo para cada hormiga,
-    recorrido realizado y distancia del recorrido)* *(valor de feromona de cada arista)*
-    *(camino óptimo entre la ciudad de origen y la de destino)*
+    recorrido realizado y distancia del recorrido)* (valor de feromona de cada arista)
+    **(camino óptimo entre la ciudad de origen y la de destino)**
     >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
     */
     
-    public int mostrarCantidadHormigas() {
+    public int cantidadHormigas() {
         return h;
+    }
+    
+    public int[] recorridoRealizado(Hormiga hormiga) {
+        return hormiga.ciudadesVisitadas;
+    }
+    
+    public double distanciaRecorrida(Hormiga hormiga) {
+        return hormiga.trayecto;
+    }
+    
+    public double valorFeromona(Arista arista) {
+        return arista.feromona;
     }
     
 }

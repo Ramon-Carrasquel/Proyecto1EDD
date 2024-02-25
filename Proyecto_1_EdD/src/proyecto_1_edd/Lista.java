@@ -64,6 +64,19 @@ public class Lista {
         return 0;
     }
     
+    public int SearchIndex(int pValue) {
+        Nodo pAux = nfirst;
+        for (int i = 0; i < iN; i++) {
+            if(pAux.value == pValue) {
+                return i + 1;
+            }
+            else {
+                pAux = pAux.next;
+            }
+        }
+        return 0;
+    }
+    
     //---------------------------------//
     
     public Nodo Next(Nodo pValue) {
@@ -166,7 +179,7 @@ public class Lista {
         return pValue;
     }
     
-    public void Clean() {
+    public void Clear() {
         this.nfirst = null;
         this.iN = 0;
     }

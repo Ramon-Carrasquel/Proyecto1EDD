@@ -11,7 +11,7 @@ public class ListaArista {
     private int iN;
     
     
-    ListaArista(String n) {
+    public ListaArista(String n) {
         
         nfirst = null;
         iN = 0;

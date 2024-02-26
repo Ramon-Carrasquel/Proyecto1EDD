@@ -1,6 +1,11 @@
 
 package proyecto_1_edd;
 
+import Interfaces.*;
+import org.graphstream.ui.view.*;
+import org.graphstream.graph.*;
+import org.graphstream.graph.implementations.*;
+
 /**
  * Esta clase comprende la inicialización de todo el programa; desde las interfaces hasta el funcionamiento interno del programa
  * @author sebas
@@ -16,7 +21,10 @@ public class Proyecto_1_EdD {
     
     public static void main(String[] args) {
         
-        //System.setProperty("org.graphstream.ui", "swing");
+        System.setProperty("org.graphstream.ui", "swing");
+        
+        MenuprincipalUI wololo = new MenuprincipalUI();
+        
         
         int cantHorm = 3;
         int ciclos = 3;
@@ -40,6 +48,11 @@ public class Proyecto_1_EdD {
         a.InsertLast(1, 4, 74);
         a.InsertLast(1, 2, 17);
         a.InsertLast(4, 3, 78);
+        
+        int inX = a.SearchIndex(1, 3);
+        Arista al = a.getArista(inX);
+        
+        System.out.println(al.src + " " + al.dst);
 
         
         
@@ -61,9 +74,24 @@ public class Proyecto_1_EdD {
         sysh.llenarArregloH(ciudOrg);
         
         
-        sysh.iniciarSimulacion();
+        //sysh.iniciarSimulacion();
         
         //sysh.caminoOptimo(graph, graph.getCiudadOrigen());
+        
+        /*
+        Graph grafo = new SingleGraph("MyGraph");
+        grafo.setAttribute("ui.stylesheet", "node { shape: circle; fill-color: #5DC1B9; text-color: #000000; size: 40px; } "
+                + " edge { size: 2px; shape: line; fill-color: #D3D3D3; }");
+        
+        grafo.addNode("A" );
+        grafo.addNode("B" );
+        grafo.addNode("C" );
+        grafo.addEdge("AB", "A", "B");
+        grafo.addEdge("BC", "B", "C");
+        grafo.addEdge("CA", "C", "A");
+        
+        Viewer viewer = grafo.display();
+        */
         
     }//Cierre del programa
     

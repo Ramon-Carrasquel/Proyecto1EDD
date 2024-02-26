@@ -22,7 +22,7 @@ public class Grafo {
        * @param cDes Define la ciudad de destino para el recorrido
      */
     
-    Grafo(int n, int cOrg, int cDes) {
+    public Grafo(int n, int cOrg, int cDes) {
         
         int y = n;
         

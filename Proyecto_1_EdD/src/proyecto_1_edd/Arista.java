@@ -7,8 +7,8 @@ public class Arista {
     
     double valor;
     double feromona;
-    int src;
-    int dst;
+    public int src;
+    public int dst;
     Arista next;
     
     

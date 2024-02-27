@@ -141,7 +141,7 @@ public class VentanaGrafica extends javax.swing.JFrame {
         for(int i = 0; i < arists.Size(); i++) {
             String name = Integer.toString(arists.getArista(i).getSrc()) + Integer.toString(arists.getArista(i).getDst());
             Edge name1 = graph.addEdge(name, arists.getArista(i).getDst(), arists.getArista(i).getSrc());
-            name1.setAttribute("ui.label", Double.toString(arists.getArista(i).getValor()));
+            name1.setAttribute("ui.label", Double.toString(arists.getArista(i).getValor()) + " - F: " + Double.toString(arists.getArista(i).getFeromona()).substring(0, 4));
             name1.setAttribute("ui.label.align", "along");
             Edges[i] = name1;
         }

@@ -1,15 +1,24 @@
 
 package proyecto_1_edd;
 
-
+/**
+ * Esta clase define la función de lista enlazada para las aristas
+ * @author sebas
+ * @version 18/02/2024/A
+ */
 
 public class ListaArista {
     
+    //Campos de la clase
     private Arista nfirst;
     private Arista nlast;
     private String name;
     private int iN;
     
+    /**
+     * Constructor para la lista de aristas
+     * @param n Establece el nombre de la lista (para la función de ciertos métodos)
+     */
     
     public ListaArista(String n) {
         
@@ -17,33 +26,49 @@ public class ListaArista {
         iN = 0;
         name = n;
         
-    }
+    }//Cierre del constructor
     
     //---------------------------------//
     
+    /**
+     * Método que sirve como comprobante si la lista está vacía o no
+     * @return Valor buleano
+     */
+    
     public boolean isEmpty() {
         return nfirst == null;
-    }
+    }//Cierre del método
+    
+    /**
+     * Método que devuelve la primera arista de la lista
+     * @return Primera arista de la lista
+     */
     
     public Arista First() {
         return nfirst;
-    }
+    }//Cierre del método
+    
+    /**
+     * Método que devuelve la última lista de la arista
+     * @return Última arista de la lista
+     */
     
     public Arista Last() {
         return nlast;
-    }
+    }//Cierre del método
+    
+    /**
+     * Método que devuelve el tamaño de la lista
+     * @return Tamaño de la lista
+     */
     
     public int Size() {
         return iN;
-    }
+    }//Cierre del método
     
-    public void Read(int inX) {
-        Arista pAux = nfirst;
-        for (int i = 0; i < inX; i++) {
-            pAux = pAux.next;
-        }
-        System.out.println(pAux.src + "," + pAux.dst + "," + pAux.valor);
-    }
+    /**
+     * Método que lee toda la lista
+     */
     
     public void ReadAll() {
         Arista pAux = nfirst;
@@ -52,7 +77,14 @@ public class ListaArista {
             pAux = pAux.next;
         }
         System.out.println("FIN");
-    }
+    }//Cierre del método
+    
+    /**
+     * Método que devuelve el valor/tamaño de una arista específica de la lista mediante los índices de las dos ciudades
+     * @param pSrc Establece la primera ciudad
+     * @param pDst Establece la segunda ciudad
+     * @return El valor/tamaño de la arista encontrada en la lista
+     */
     
     public double SearchValue(int pSrc, int pDst) {
         Arista pAux = nfirst;
@@ -65,7 +97,14 @@ public class ListaArista {
             }
         }
         return 0;
-    }
+    }//Cierre del método
+    
+    /**
+     * Método que devuelve el índice de una arista específica de la lista mediante los índices de las dos ciudades
+     * @param pSrc Establece la primera ciudad
+     * @param pDst Establece la segunda ciudad
+     * @return El índice de la arista encontrada en la lista
+     */
     
     public int SearchIndex(int pSrc, int pDst) {
         Arista pAux = nfirst;
@@ -78,9 +117,16 @@ public class ListaArista {
             }
         }
         return 0;
-    }
+    }//Cierre del método
     
     //---------------------------------//
+    
+    /**
+     * Método que crea e inserta una arista en la primera posición de la lista
+     * @param pSrc Establece la primera ciudad
+     * @param pDst Establece la segunda ciudad
+     * @param pValor Establece el valor/tamaño de la arista
+     */
     
     public void InsertFirst(int pSrc, int pDst, double pValor) {
         for(int i = 0; i < iN; i++) {
@@ -99,7 +145,15 @@ public class ListaArista {
             nlast = nfirst;
         }
         iN++;
-    }
+    }//Cierre del método
+    
+    /**
+     * Método que crea e inserta una arista en una posición en específico de la lista
+     * @param inX Establece el índice de la posición
+     * @param pSrc Establece la primera ciudad
+     * @param pDst Establece la segunda ciudad
+     * @param pValor Establece el valor/tamaño de la arista
+     */
     
     public void Insert(int inX, int pSrc, int pDst, double pValor) {
         for(int i = 0; i < iN; i++) {
@@ -127,7 +181,14 @@ public class ListaArista {
         Arista pNew = new Arista(pSrc, pDst, pValor, pAux.next);
         pAux.next = pNew;
         iN++;
-    }
+    }//Cierre del método
+    
+    /**
+     * Método que crea e inserta una arista en la última posición de la lista
+     * @param pSrc Establece la primera ciudad
+     * @param pDst Establece la segunda ciudad
+     * @param pValor Establece el valor/tamaño de la arista
+     */
     
     public void InsertLast(int pSrc, int pDst, double pValor) {
         for(int i = 0; i < iN; i++) {
@@ -147,9 +208,15 @@ public class ListaArista {
         nlast.next = pNew;
         nlast = pNew;
         iN++;
-    }
+    }//Cierre del método
     
     //---------------------------------//
+    
+    /**
+     * Método que devuelve una arista en específico de la lista
+     * @param inX Establece el índice de la arista a buscar
+     * @return La arista específica
+     */
     
     public Arista getArista(int inX) {
         Arista pAux = nfirst;
@@ -157,7 +224,12 @@ public class ListaArista {
             pAux = pAux.next;
         }
         return pAux;
-    }
+    }//Cierre del método
+    
+    /**
+     * Método que elimina la primera arista de la lista
+     * @return Arista eliminada
+     */
     
     public double DeleteFirst() {
         double pValor = nfirst.valor;
@@ -168,7 +240,13 @@ public class ListaArista {
         
         iN--;
         return pValor;
-    }
+    }//Cierre del método
+    
+    /**
+     * Método que elimina una arista en específico de la lista
+     * @param inX Establece el índice de la arista a eliminar
+     * @return Arista específica eliminada
+     */
     
     public double Delete(int inX) {
         if (inX == 0) {
@@ -184,7 +262,12 @@ public class ListaArista {
         
         iN--;
         return pValor;
-    }
+    }//Cierre del método
+    
+    /**
+     * Método que elimina la última arista de la lista
+     * @return Arista eliminada
+     */
     
     public double DeleteLast() {
         if (iN <= 1) {
@@ -198,11 +281,15 @@ public class ListaArista {
         
         iN--;
         return pValor;
-    }
+    }//Cierre del método
+    
+    /**
+     * Método que limpia la lista
+     */
     
     public void Clear() {
         this.nfirst = null;
         this.iN = 0;
-    }
+    }//Cierre del método
     
-}
+}//Cierre de la clase

@@ -2,9 +2,6 @@
 package proyecto_1_edd;
 
 import Interfaces.*;
-import org.graphstream.ui.view.*;
-import org.graphstream.graph.*;
-import org.graphstream.graph.implementations.*;
 
 /**
  * Esta clase comprende la inicialización de todo el programa; desde las interfaces hasta el funcionamiento interno del programa
@@ -21,78 +18,10 @@ public class Proyecto_1_EdD {
     
     public static void main(String[] args) {
         
-        System.setProperty("org.graphstream.ui", "swing");
         
         MenuprincipalUI wololo = new MenuprincipalUI();
         
         
-        int cantHorm = 3;
-        int ciclos = 3;
-        
-        int ciudOrg = 1;
-        int ciudDes = 6;
-        
-        int xCity = 6;
-        
-        
-        
-        ListaArista a = new ListaArista("a");
-        
-        
-        a.InsertLast(1, 3, 34);
-        a.InsertLast(0, 3, 24);
-        a.InsertLast(0, 2, 72);
-        a.InsertLast(0, 5, 39);
-        a.InsertLast(5, 3, 66);
-        a.InsertLast(4, 5, 88);
-        a.InsertLast(1, 4, 74);
-        a.InsertLast(1, 2, 17);
-        a.InsertLast(4, 3, 78);
-        
-        int inX = a.SearchIndex(1, 3);
-        Arista al = a.getArista(inX);
-        
-        System.out.println(al.src + " " + al.dst);
-
-        
-        
-        a.ReadAll();
-        System.out.println(a.Size());
-        
-        
-        Grafo graph = new Grafo(xCity, ciudOrg, ciudDes);
-        
-        for(int i = 0; i < a.Size() + 1; i++) {
-            graph.añadirArista(a.getArista(i).src, a.getArista(i).dst, a.getArista(i).valor);
-        }
-        
-        graph.print();
-        
-        
-        
-        SistemaHormiga sysh = new SistemaHormiga(graph, a, cantHorm, ciclos, 0, 0, 0, 0);
-        sysh.llenarArregloH(ciudOrg);
-        
-        
-        //sysh.iniciarSimulacion();
-        
-        //sysh.caminoOptimo(graph, graph.getCiudadOrigen());
-        
-        /*
-        Graph grafo = new SingleGraph("MyGraph");
-        grafo.setAttribute("ui.stylesheet", "node { shape: circle; fill-color: #5DC1B9; text-color: #000000; size: 40px; } "
-                + " edge { size: 2px; shape: line; fill-color: #D3D3D3; }");
-        
-        grafo.addNode("A" );
-        grafo.addNode("B" );
-        grafo.addNode("C" );
-        grafo.addEdge("AB", "A", "B");
-        grafo.addEdge("BC", "B", "C");
-        grafo.addEdge("CA", "C", "A");
-        
-        Viewer viewer = grafo.display();
-        */
-        
     }//Cierre del programa
     
-}
+}//Cierre de la clase

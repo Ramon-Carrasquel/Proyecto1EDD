@@ -5,13 +5,13 @@ package proyecto_1_edd;
 
 public class Hormiga {
     
-    int posicion;                                                               //posicion actual de la hormiga
-    int posicionOriginal;                                                       //posicion original de la hormiga
-    boolean[] visitados;                                                        //ciudades visitadas
-    double trayecto = 0;                                                        //suma total de la distancia recorrida
-    int[] ciudadesVisitadas;                                                    //ciudades visitadas en orden
-    Grafo grafoSpec;                                                            //grafo en cuestion
-    ListaArista aristasVisitadas = new ListaArista("aristasVisitadas");       //aristas visitadas por la hormiga
+    int posicion;
+    int posicionOriginal;
+    boolean[] visitados;
+    double trayecto = 0;
+    int[] ciudadesVisitadas;
+    Grafo grafoSpec;
+    ListaArista aristasVisitadas = new ListaArista("aristasVisitadas");
     
     
     Hormiga(int posicion, Grafo grafoSpec) {
@@ -24,28 +24,6 @@ public class Hormiga {
         visitados[posicion - 1] = true;
         ciudadesVisitadas[0] = posicion;
         
-    }
-    
-    public void dFS() {
-        int posicion_ = posicion - 1;
-        dFSH(posicion_, visitados);
-    }
-    
-    public void dFSH(int posicion_, boolean[] visitado) {
-        if(visitado[posicion_]) {
-            return;
-        }
-        else {
-            visitado[posicion_] = true;
-            System.out.println(posicion_ + " = Visitado");
-        }
-        
-        for(int i = 0; i < grafoSpec.getTamañoHorizontal(posicion_); i++) {
-            if(grafoSpec.getValorArista(posicion_, i) != 0) {
-                dFSH(i, visitado);
-            }
-        }
-        return;
     }
     
     //---------------------------------//
@@ -109,6 +87,16 @@ public class Hormiga {
         for(int i = 0; i < tamaño; i++) {
             aristasVisitadas.DeleteLast();
         }
+    }
+    
+    //---------------------------------//
+    
+    public int[] getCiudadesVisitadas() {
+        return ciudadesVisitadas;
+    }
+    
+    public double getTrayecto() {
+        return trayecto;
     }
     
     //---------------------------------//

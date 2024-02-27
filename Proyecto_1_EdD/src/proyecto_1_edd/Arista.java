@@ -5,8 +5,8 @@ package proyecto_1_edd;
 
 public class Arista {
     
-    double valor;
-    double feromona;
+    public double valor;
+    public double feromona;
     public int src;
     public int dst;
     Arista next;
@@ -52,6 +52,26 @@ public class Arista {
         this.next = next;
     }
     
+    //---------------------------------//
+    
+    public int getSrc() {
+        return src;
+    }
+    
+    public int getDst() {
+        return dst;
+    }
+    
+    public double getValor() {
+        return valor;
+    }
+    
+    public double getFeromona() {
+        return feromona;
+    }
+    
+    //---------------------------------//
+    
     public void cantFeroInic(int cantCiudades) {
         this.feromona = feromona / (double) cantCiudades;
     }
@@ -60,8 +80,14 @@ public class Arista {
         this.feromona = valor;
     }
     
+    //---------------------------------//
+    
     public void printFeromona() {
         System.out.println(feromona);
+    }
+    
+    public void printSrcDst() {
+        System.out.println(src + " - " + dst);
     }
     
 }

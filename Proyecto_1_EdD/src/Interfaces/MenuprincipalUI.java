@@ -10,10 +10,6 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
-import org.graphstream.graph.Graph;
-import org.graphstream.graph.implementations.*;
-import org.graphstream.ui.swing_viewer.*;
-import org.graphstream.ui.view.*;
 
 import proyecto_1_edd.*;
 
@@ -43,7 +39,6 @@ public class MenuprincipalUI extends javax.swing.JFrame {
     int c2;
     double tamaño;
     
-    Grafo gr;
     ListaArista as = new ListaArista("as");
     
     DefaultTableModel mt = new DefaultTableModel();
@@ -55,11 +50,22 @@ public class MenuprincipalUI extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setVisible(true);
         
+        
+        Jtextfieldnciudades.setText(Integer.toString(4));
+        
+        
+        textfield_alpha.setText(Integer.toString(1));
+        TextFieldbeta.setText(Integer.toString(2));
+        TextFieldaprendizaje.setText(Integer.toString(1));
+        TextFieldevaporacion.setText(Double.toString(0.5));
+        
+                
         String ids [] = {"Ciudad 1","Ciudad 2","Tamaño"};
         
         mt.setColumnIdentifiers(ids);
-        
         jTable1.setModel(mt);
+        
+        Boton_iniciar_simulacion.setEnabled(false);
     }
     
     public void añadirArista(int c1, int c2, double aV) {
@@ -91,7 +97,6 @@ public class MenuprincipalUI extends javax.swing.JFrame {
         jLabeiconomenu = new javax.swing.JLabel();
         Closebutton = new javax.swing.JButton();
         Label_icono = new javax.swing.JLabel();
-        boton_carga_archivos1 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         JtextfieldCiudadDestino = new javax.swing.JTextField();
@@ -162,7 +167,6 @@ public class MenuprincipalUI extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jBotonMostrarAristas = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -206,18 +210,7 @@ public class MenuprincipalUI extends javax.swing.JFrame {
         jPanel1.add(Closebutton, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 30, 60, -1));
 
         Label_icono.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/blackanthead_reescalada50.png"))); // NOI18N
-        jPanel1.add(Label_icono, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 120, 250, 180));
-
-        boton_carga_archivos1.setBackground(new java.awt.Color(51, 51, 51));
-        boton_carga_archivos1.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
-        boton_carga_archivos1.setForeground(new java.awt.Color(0, 153, 153));
-        boton_carga_archivos1.setText("Carga de datos");
-        boton_carga_archivos1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                boton_carga_archivos1ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(boton_carga_archivos1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, 160, -1));
+        jPanel1.add(Label_icono, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 110, 250, 180));
 
         jPanel2.setBackground(new java.awt.Color(102, 102, 102));
         jPanel2.setForeground(new java.awt.Color(51, 51, 51));
@@ -242,7 +235,7 @@ public class MenuprincipalUI extends javax.swing.JFrame {
                 textfield_alphaActionPerformed(evt);
             }
         });
-        jPanel1.add(textfield_alpha, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 500, 60, 20));
+        jPanel1.add(textfield_alpha, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 500, 60, 20));
 
         TextFieldbeta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -302,7 +295,7 @@ public class MenuprincipalUI extends javax.swing.JFrame {
         jLabel10.setBackground(new java.awt.Color(102, 102, 102));
         jLabel10.setFont(new java.awt.Font("Segoe UI Semibold", 1, 12)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(0, 204, 204));
-        jLabel10.setText("Ciudad Destino");
+        jLabel10.setText("Ciudad Comida");
         jPanel4.add(jLabel10);
 
         jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 430, 100, 30));
@@ -633,32 +626,24 @@ public class MenuprincipalUI extends javax.swing.JFrame {
 
         jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, 290, 160));
 
-        jBotonMostrarAristas.setText("Mostrar Aristas");
-        jBotonMostrarAristas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBotonMostrarAristasActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jBotonMostrarAristas, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 420, -1, -1));
-
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1000, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void Boton_iniciar_simulacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Boton_iniciar_simulacionActionPerformed
+        Boton_iniciar_simulacion.setEnabled(false);
+        confirmarDatos.setEnabled(false);
+        jBotonAñadir.setEnabled(false);
+        jBotonEliminar.setEnabled(false);
         
+        VentanaGrafica VG = new VentanaGrafica(nCiudades, nHormigas, c_origen, c_destino, C, a, b, q, evaporacion, as);
         
     }//GEN-LAST:event_Boton_iniciar_simulacionActionPerformed
 
     private void ClosebuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ClosebuttonActionPerformed
         System.exit(0);
     }//GEN-LAST:event_ClosebuttonActionPerformed
-
-    private void boton_carga_archivos1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_carga_archivos1ActionPerformed
-        Carga_archivos carga_archivos = new Carga_archivos();
-        carga_archivos.setVisible(true);
-    }//GEN-LAST:event_boton_carga_archivos1ActionPerformed
 
     private void JtextfieldCiudadDestinoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JtextfieldCiudadDestinoActionPerformed
         // TODO add your handling code here:
@@ -703,21 +688,32 @@ public class MenuprincipalUI extends javax.swing.JFrame {
             
             if(nHormigas < 1) {nHormigas = 1;}
             
-            jCiudades.setText(Integer.toString(nCiudades));
-            jHormigas.setText(Integer.toString(nHormigas));
-            
             
             
             if(a < 1) {a = 1;}
-            if(b < 1) {b = 1;}
+            if(b < 2) {b = 2;}
             if(q < 1) {q = 1;}
             if(C < 1) {C = 1;}
             
             if(evaporacion <= 0.0 || evaporacion >= 1.0) {
                 evaporacion = 0.5;
-                String errorMessage = "Error de dato: El factor de evaporación debe de estar en el intervalo (0,1).";
+                String errorMessage = "Error de dato: El factor de evaporación debe de estar en el intervalo (0,1). El valor por defecto es 0.5.";
                 JOptionPane.showMessageDialog(null, errorMessage);
             }
+            
+            
+            
+            if(c_origen == c_destino) {
+                JOptionPane.showMessageDialog(null, "Error de dato: Ciudad de origen y ciudad de destino no pueden ser iguales.");
+                return;
+            }
+            else if(c_origen > nCiudades || c_destino > nCiudades) {
+                JOptionPane.showMessageDialog(null, "Error de dato: Las ciudades de origen y destino no pueden ser mayores a la cantidad de ciudades");
+                return;
+            }
+            
+            jCiudades.setText(Integer.toString(nCiudades));
+            jHormigas.setText(Integer.toString(nHormigas));
             
             jEvaporacion.setText(Double.toString(evaporacion));
             
@@ -727,18 +723,13 @@ public class MenuprincipalUI extends javax.swing.JFrame {
             jAprendizaje.setText(Integer.toString(q));
             jCiclos.setText(Integer.toString(C));
             
-            if(c_origen == c_destino) {
-                JOptionPane.showMessageDialog(null, "Error de dato: Ciudad de origen y ciudad de destino no pueden ser iguales.");
-            }
-            else if(c_origen > nCiudades || c_destino > nCiudades) {
-                JOptionPane.showMessageDialog(null, "Error de dato: Las ciudades de origen y destino no pueden ser mayores a la cantidad de ciudades");
-            }
-            else {
-                jCiudadOrigen.setText(Integer.toString(c_origen));
-                jCiudadDestino.setText(Integer.toString(c_destino));
-            }
+            jCiudadOrigen.setText(Integer.toString(c_origen));
+            jCiudadDestino.setText(Integer.toString(c_destino));
             
-            as.ReadAll();
+            
+            
+            confirmarDatos.setEnabled(false);
+            Boton_iniciar_simulacion.setEnabled(true);
         }
         catch(Exception e) {
             JOptionPane.showMessageDialog(null, "Error de entrada de dato: Dato nulo o no válido.");
@@ -760,13 +751,15 @@ public class MenuprincipalUI extends javax.swing.JFrame {
             int row = jTable1.getSelectedRow();
             String temp1 = jTable1.getModel().getValueAt(row, 0).toString();
             String temp2 = jTable1.getModel().getValueAt(row, 1).toString();
-
+            
             c1 = Integer.parseInt(temp1);
             c2 = Integer.parseInt(temp2);
-
+            
             int inX = as.SearchIndex(c1 - 1, c2 - 1);
+            
+            
             as.Delete(inX - 1);
-
+            
             mt.removeRow(jTable1.getSelectedRow());
         }
         catch (Exception e) {
@@ -790,30 +783,31 @@ public class MenuprincipalUI extends javax.swing.JFrame {
             c2 = Integer.parseInt(jTextFieldCiudadUnion2.getText());
             tamaño = Double.parseDouble(jTextFieldAristaValor.getText());
             
+            if(c1 > c2) {
+                int temp;
+                
+                temp = c1;
+                c1 = c2;
+                c2 = temp;
+            }
+            
             
             if(!as.isEmpty()) {
                 int inX = as.SearchIndex(c1 - 1, c2 - 1);
-                Arista al = as.getArista(inX);
+                Arista al = as.getArista(inX - 1);
                 if(c1 == al.src + 1 && c2 == al.dst + 1) {
                     return;
                 }
                 
             }
             
-            
-            
-            /*
-            if(c1 == Integer.parseInt(temp1) && c2 == Integer.parseInt(temp2)) {
-                return;
-            }
-            */
 
             if(tamaño < 1) {
                 JOptionPane.showMessageDialog(null, "Error al añadir arista: La distancia debe de ser mayor.");
                 return;
             }
 
-            if(c1 != c2 && c1 < nCiudades && c2 < nCiudades) {
+            if(c1 != c2 && c1 <= nCiudades && c2 <= nCiudades) {
                 as.InsertLast(c1 - 1, c2 - 1, tamaño);
                 mt.addRow(new Object[] {c1, c2, tamaño});
             }
@@ -838,10 +832,6 @@ public class MenuprincipalUI extends javax.swing.JFrame {
     private void jTextFieldAristaValorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldAristaValorActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldAristaValorActionPerformed
-
-    private void jBotonMostrarAristasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBotonMostrarAristasActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jBotonMostrarAristasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -892,14 +882,12 @@ public class MenuprincipalUI extends javax.swing.JFrame {
     private javax.swing.JTextField TextFieldciclos;
     private javax.swing.JTextField TextFieldevaporacion;
     private javax.swing.JTextField TextFieldnhormigas;
-    private javax.swing.JButton boton_carga_archivos1;
     private javax.swing.JButton confirmarDatos;
     private javax.swing.JLabel jAlpha;
     private javax.swing.JLabel jAprendizaje;
     private javax.swing.JLabel jBeta;
     private javax.swing.JButton jBotonAñadir;
     private javax.swing.JButton jBotonEliminar;
-    private javax.swing.JButton jBotonMostrarAristas;
     private javax.swing.JLabel jCiclos;
     private javax.swing.JLabel jCiudadDestino;
     private javax.swing.JLabel jCiudadOrigen;

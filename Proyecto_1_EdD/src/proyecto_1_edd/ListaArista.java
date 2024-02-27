@@ -103,7 +103,7 @@ public class ListaArista {
     
     public void Insert(int inX, int pSrc, int pDst, double pValor) {
         for(int i = 0; i < iN; i++) {
-            if((getArista(i + 1).src == pSrc && getArista(i+1).dst == pDst) || (getArista(i + 1).dst == pSrc && getArista(i+1).src == pDst)) {
+            if((getArista(i).src == pSrc && getArista(i).dst == pDst) || (getArista(i).dst == pSrc && getArista(i).src == pDst)) {
                 return;
             }
             else if(pSrc == pDst) {
@@ -131,7 +131,7 @@ public class ListaArista {
     
     public void InsertLast(int pSrc, int pDst, double pValor) {
         for(int i = 0; i < iN; i++) {
-            if((getArista(i + 1).src == pSrc && getArista(i+1).dst == pDst) || (getArista(i + 1).dst == pSrc && getArista(i+1).src == pDst)) {
+            if((getArista(i).src == pSrc && getArista(i).dst == pDst) || (getArista(i).dst == pSrc && getArista(i).src == pDst)) {
                 return;
             }
             else if(pSrc == pDst) {
@@ -153,7 +153,7 @@ public class ListaArista {
     
     public Arista getArista(int inX) {
         Arista pAux = nfirst;
-        for (int i = 1; i < inX; i++) {
+        for (int i = 0; i < inX; i++) {
             pAux = pAux.next;
         }
         return pAux;
@@ -182,6 +182,7 @@ public class ListaArista {
         double pValor = pPrev.next.valor;
         pPrev.next = pPrev.next.next;
         
+        iN--;
         return pValor;
     }
     

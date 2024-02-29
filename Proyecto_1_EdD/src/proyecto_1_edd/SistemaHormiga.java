@@ -449,12 +449,15 @@ public class SistemaHormiga {
      */
     
     public double potenciaD(double base, int power) {
-        double resultado = 0;
-        if(base == 1) {
+        double resultado = base;
+        if(power == 0) {
+            return 1;
+        }
+        if(power == 1) {
             return base;
         }
         for(int i = 0; i < power; i++) {
-            resultado = base * base;
+            resultado = resultado * base;
         }
         return resultado;
     }//Cierre del método
